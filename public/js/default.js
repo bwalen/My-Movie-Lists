@@ -1,23 +1,37 @@
 function search(){
   var searchText = document.getElementById("search-text");
-  console.log(searchText.value);
   xhr = new XMLHttpRequest();
   xhr.open("GET", "/search/" + searchText.value);
   xhr.send();
   xhr.addEventListener("load", function(){
-    var object = JSON.parse(xhr.response);
-    console.log(object);
-    displaySearchResults(object);
+    displaySearchResults(JSON.parse(xhr.response));
   })
 }
 
 function displaySearchResults(inputObject){
   removeAll("search-results");
   for( var i = 0; i < inputObject.Search.length; i++){
-    
     displayOneSearch(inputObject.Search[i]);
   }
 }
+
+function loadMovieArray(){
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", "/load");
+  xhr.send();
+  xhr.addEventListener("load", function(){
+    moviesArray = JSON.parse(xhr.response);
+    displayMovies(JSON.parse(xhr.response));
+  })
+}
+
+function displayMovies(array){
+  removeAll("movie-body");
+  for(var i = 0 ; i < array.length ; i++){
+    getMovieData(array[i]);
+  }
+}
+
 
 function displayOneSearch(inputObject){
   var searchResults = document.getElementById("search-results");
@@ -28,6 +42,7 @@ function displayOneSearch(inputObject){
   var mediaHeading = document.createElement("h4");
   var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
 //  var bodyText = document.createTextNode()
+  searchResults.setAttribute("class" , "panel panel-default");
   container.setAttribute("class" , "media");
   outterDiv.setAttribute("class", "media-left");
   if (inputObject.Poster == "N/A"){
@@ -55,6 +70,41 @@ function removeAll(inputId){
   }
 }
 
+function getMovieData(movieId){
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json");
+  xhr.send();
+  xhr.addEventListener("load", displayOneMovie);
+}
+
+function displayOneMovie(e){
+  var inputObj= JSON.parse(e.target.response);
+  var movieDisplay = document.getElementById("movie-body");
+  var container = document.createElement("div");
+  var outterDiv = document.createElement("div");
+  var movieImage = document.createElement("img");
+  var caption = document.createElement("div");
+  var header = document.createElement("h5");
+  var body = document.createElement("p");
+  var headerText = document.createTextNode(inputObj.Title);
+  var bodyText = document.createTextNode(inputObj.Year + " " + inputObj.Plot);
+  container.setAttribute("class", "col-md-4");
+  movieImage.setAttribute("src", inputObj.Poster);
+  caption.setAttribute("class", "caption");
+  outterDiv.setAttribute("class", "thumbnail");
+  body.appendChild(bodyText);
+  header.appendChild(headerText);
+  caption.appendChild(header);
+  caption.appendChild(body);
+  outterDiv.appendChild(movieImage);
+  outterDiv.appendChild(caption);
+  container.appendChild(outterDiv);
+  movieDisplay.appendChild(container);
+}
+
 
 var searchButton = document.getElementById("search-button");
 searchButton.addEventListener("click", search);
+var moviesArray;
+loadMovieArray();
+console.log(moviesArray);
