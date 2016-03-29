@@ -96,22 +96,28 @@ function displayOneMovie(inputObj){
   var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
   var bodyText = document.createTextNode(inputObj.Plot);
   var starringText = document.createTextNode(inputObj.Actors);
+  var closeSpan = document.createElement("span");
   container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
+  closeSpan.setAttribute("class", "glyphicon glyphicon-remove");
+  container.setAttribute("data-id", inputObj.imdbID);
+  closeSpan.setAttribute("data-id", inputObj.imdbID);
   starring.appendChild(starringText);
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
   caption.appendChild(starring);
   caption.appendChild(body);
+  caption.appendChild(closeSpan);
   outterDiv.appendChild(movieImage);
   container.appendChild(outterDiv);
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
+  closeSpan.addEventListener("click", removeAMovie);
 }
 
 function addMovieToList(e){
@@ -125,8 +131,19 @@ function addMovieToList(e){
   moviesArray.push(imdbId);
   var copyBox = document.getElementById("copy-text");
   copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
-  //copyBox.appendChild(copyText);
   getMovieData(imdbId);
+}
+
+function removeAMovie(e){
+  var movieDisplay = document.getElementById("movie-body");
+  var whereIam = movieDisplay.firstChild;
+  while(whereIam.getAttribute("data-id") != e.target.getAttribute("data-id")){
+    whereIam = whereIam.nextSibling;
+  }
+  moviesArray = _.without(moviesArray, whereIam.getAttribute("data-id"));
+  movieDisplay.removeChild(whereIam);
+  var copyBox = document.getElementById("copy-text");
+  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
 }
 
 function copySession(e){
@@ -134,7 +151,6 @@ function copySession(e){
   copyBox.select();
   var successful = document.execCommand("copy");
   copyBox.value = "Copy Successful";
-  console.log(successful);
 }
 
 var searchButton = document.getElementById("search-button");

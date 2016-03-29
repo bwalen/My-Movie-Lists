@@ -18,7 +18,7 @@ app.get("/search/:search", function(req, res){
 
 app.get("/load" , function(req, res){
   res.send(JSON.stringify(listArray));
-  listArray = ["tt0096895"];
+  listArray = [];
 })
 
 app.listen(8080, function(){
