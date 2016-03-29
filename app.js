@@ -5,6 +5,12 @@ var listArray = ["tt0096895"];
 
 app.use(express.static("./"));
 
+app.get("/session/:search", function(req, res){
+  listArray = JSON.parse(req.params.search);
+  console.log(listArray);
+  res.redirect("/public/index.html");
+});
+
 app.get("/search/:search", function(req, res){
   request("http://www.omdbapi.com/?s=" + req.params.search + "&type=movie&page=1&y=&plot=short&r=json&tomatoes=true", function(error, response, body){
     res.send(body);
@@ -13,6 +19,7 @@ app.get("/search/:search", function(req, res){
 
 app.get("/load" , function(req, res){
   res.send(JSON.stringify(listArray));
+  listArray = ["tt0096895"];
 })
 
 app.listen(8080, function(){
