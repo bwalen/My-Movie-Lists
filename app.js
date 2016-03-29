@@ -1,13 +1,12 @@
 var express = require('express');
 var app = express();
 var request = require("request");
-var listArray = ["tt0096895"];
+var listArray = [];
 
 app.use(express.static("./"));
 
 app.get("/session/:search", function(req, res){
   listArray = JSON.parse(req.params.search);
-  console.log(listArray);
   res.redirect("/public/index.html");
 });
 

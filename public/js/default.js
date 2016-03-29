@@ -41,7 +41,7 @@ function displayOneSearch(inputObject){
   var mediaHeading = document.createElement("h5");
   var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
 //  var bodyText = document.createTextNode()
-  searchResults.setAttribute("class" , "panel panel-default");
+  searchResults.setAttribute("class" , "more-margin");
   container.setAttribute("class" , "media");
   container.setAttribute("data-id", inputObject.imdbID);
   outterDiv.setAttribute("class", "media-left");
@@ -123,11 +123,24 @@ function addMovieToList(e){
     imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
   }
   moviesArray.push(imdbId);
+  var copyBox = document.getElementById("copy-text");
+  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+  //copyBox.appendChild(copyText);
   getMovieData(imdbId);
 }
 
+function copySession(e){
+  var copyBox = document.getElementById("copy-text");
+  copyBox.select();
+  var successful = document.execCommand("copy");
+  copyBox.value = "Copy Successful";
+  console.log(successful);
+}
+
 var searchButton = document.getElementById("search-button");
+var copyButton = document.getElementById("copy-button");
 searchButton.addEventListener("click", search);
+copyButton.addEventListener("click", copySession);
 var moviesArray;
 var movieDataArray = [];
 loadMovieArray();
