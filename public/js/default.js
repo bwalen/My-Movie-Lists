@@ -38,7 +38,7 @@ function displayOneSearch(inputObject){
   var outterDiv = document.createElement("div");
   var mediaImage = document.createElement("img");
   var innerDiv = document.createElement("div");
-  var mediaHeading = document.createElement("h4");
+  var mediaHeading = document.createElement("h5");
   var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
 //  var bodyText = document.createTextNode()
   searchResults.setAttribute("class" , "panel panel-default");
@@ -73,7 +73,7 @@ function removeAll(inputId){
 
 function getMovieData(movieId){
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json");
+  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=full&r=json");
   xhr.send();
   xhr.addEventListener("load", addMovieData);
 }
@@ -92,21 +92,26 @@ function displayOneMovie(inputObj){
   var caption = document.createElement("div");
   var header = document.createElement("h5");
   var body = document.createElement("p");
+  var starring = document.createElement("p");
   var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
   var bodyText = document.createTextNode(inputObj.Plot);
-  container.setAttribute("class", "col-md-4");
+  var starringText = document.createTextNode(inputObj.Actors);
+  container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
-  caption.setAttribute("class", "caption");
-  outterDiv.setAttribute("class", "thumbnail");
+  movieImage.setAttribute("class", "img-responsive");
+  caption.setAttribute("class", "col-md-9");
+  outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
+  starring.appendChild(starringText);
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
+  caption.appendChild(starring);
   caption.appendChild(body);
   outterDiv.appendChild(movieImage);
-  outterDiv.appendChild(caption);
   container.appendChild(outterDiv);
-  movieDisplay.appendChild(container);
+  container.appendChild(caption);
+  movieDisplay.insertBefore(container, movieDisplay.firstChild);
 }
 
 function addMovieToList(e){
