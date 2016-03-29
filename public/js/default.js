@@ -75,12 +75,16 @@ function getMovieData(movieId){
   xhr = new XMLHttpRequest();
   xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json");
   xhr.send();
-  xhr.addEventListener("load", displayOneMovie);
+  xhr.addEventListener("load", addMovieData);
 }
 
-function displayOneMovie(e){
-  var inputObj= JSON.parse(e.target.response);
+function addMovieData(e){
+  var inputObj = JSON.parse(e.target.response);
   movieDataArray.push(inputObj);
+  displayOneMovie(inputObj);
+}
+
+function displayOneMovie(inputObj){
   var movieDisplay = document.getElementById("movie-body");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
@@ -94,6 +98,7 @@ function displayOneMovie(e){
   movieImage.setAttribute("src", inputObj.Poster);
   caption.setAttribute("class", "caption");
   outterDiv.setAttribute("class", "thumbnail");
+  body.setAttribute("class", "body-text");
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
@@ -113,6 +118,7 @@ function addMovieToList(e){
     imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
   }
   moviesArray.push(imdbId);
+  getMovieData(imdbId);
 }
 
 var searchButton = document.getElementById("search-button");
