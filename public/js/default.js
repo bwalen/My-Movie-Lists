@@ -32,7 +32,6 @@ function displayMovies(array){
   }
 }
 
-
 function displayOneSearch(inputObject){
   var searchResults = document.getElementById("search-results");
   var container = document.createElement("div");
@@ -44,6 +43,7 @@ function displayOneSearch(inputObject){
 //  var bodyText = document.createTextNode()
   searchResults.setAttribute("class" , "panel panel-default");
   container.setAttribute("class" , "media");
+  container.setAttribute("data-id", inputObject.imdbID);
   outterDiv.setAttribute("class", "media-left");
   if (inputObject.Poster == "N/A"){
     mediaImage.setAttribute("src", "images/blankposter.png");
@@ -60,6 +60,7 @@ function displayOneSearch(inputObject){
   container.appendChild(outterDiv);
   container.appendChild(innerDiv);
   searchResults.appendChild(container);
+  container.addEventListener("click", addMovieToList);
 }
 
 function removeAll(inputId){
@@ -79,6 +80,7 @@ function getMovieData(movieId){
 
 function displayOneMovie(e){
   var inputObj= JSON.parse(e.target.response);
+  movieDataArray.push(inputObj);
   var movieDisplay = document.getElementById("movie-body");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
@@ -86,8 +88,8 @@ function displayOneMovie(e){
   var caption = document.createElement("div");
   var header = document.createElement("h5");
   var body = document.createElement("p");
-  var headerText = document.createTextNode(inputObj.Title);
-  var bodyText = document.createTextNode(inputObj.Year + " " + inputObj.Plot);
+  var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
+  var bodyText = document.createTextNode(inputObj.Plot);
   container.setAttribute("class", "col-md-4");
   movieImage.setAttribute("src", inputObj.Poster);
   caption.setAttribute("class", "caption");
@@ -102,9 +104,19 @@ function displayOneMovie(e){
   movieDisplay.appendChild(container);
 }
 
+function addMovieToList(e){
+  var imdbId;
+  if(e.target.parentNode.getAttribute("data-id")){
+    imdbId = e.target.parentNode.getAttribute("data-id");
+  }
+  else if(e.target.parentNode.parentNode.getAttribute("data-id")){
+    imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
+  }
+  moviesArray.push(imdbId);
+}
 
 var searchButton = document.getElementById("search-button");
 searchButton.addEventListener("click", search);
 var moviesArray;
+var movieDataArray = [];
 loadMovieArray();
-console.log(moviesArray);
