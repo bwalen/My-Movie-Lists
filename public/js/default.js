@@ -123,7 +123,9 @@ function displayOneMovie(inputObj){
 }
 
 function displayProfile(e){
+  removeAll("profile-page");
   var inputObj = movieDataArray[e.target.getAttribute("data-id")];
+  console.log(inputObj);
   var movieDisplay = document.getElementById("profile-page");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
@@ -135,23 +137,30 @@ function displayProfile(e){
   var trailerDiv = document.createElement("div");
   var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
   var bodyText = document.createTextNode(inputObj.Plot);
-  var starringText = document.createTextNode(inputObj.Actors);
+  var starringText = document.createTextNode("Starring: " + inputObj.Actors);
+  var directedText = document.createTextNode("Directed by: " + inputObj.Director);
+  var directedP = document.createElement("p");
+  var ratingP = document.createElement("p");
+  var rating = document.createTextNode("Rated: " + inputObj.Rated);
   movieDisplay.setAttribute("class", "panel-body");
   container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
-  body.setAttribute("class", "body-text");
   trailerDiv.setAttribute("id", "trailer");
+  directedP.appendChild(directedText);
+  ratingP.appendChild(rating);
   starring.appendChild(starringText);
+  starring.appendChild(directedP);
+  starring.appendChild(ratingP);
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
   caption.appendChild(starring);
   caption.appendChild(body);
-  caption.appendChild(trailerDiv);
   outterDiv.appendChild(movieImage);
+  outterDiv.appendChild(trailerDiv);
   container.appendChild(outterDiv);
   container.appendChild(caption);
   movieDisplay.appendChild(container);
