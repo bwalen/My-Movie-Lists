@@ -82,7 +82,6 @@ function addMovieData(e){
   var inputObj = JSON.parse(e.target.response);
   movieDataArray.push(inputObj);
   displayOneMovie(inputObj);
-  console.log(movieDataArray);
 }
 
 function displayOneMovie(inputObj){
@@ -101,6 +100,7 @@ function displayOneMovie(inputObj){
   container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
+  movieImage.setAttribute("data-id", movieDataArray.length-1 );
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
@@ -119,9 +119,11 @@ function displayOneMovie(inputObj){
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
   closeSpan.addEventListener("click", removeAMovie);
+  movieImage.addEventListener("click", displayProfile);
 }
 
-function displayProfile(inputObj){
+function displayProfile(e){
+  var inputObj = movieDataArray[e.target.getAttribute("data-id")];
   var movieDisplay = document.getElementById("profile-page");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
@@ -130,40 +132,44 @@ function displayProfile(inputObj){
   var header = document.createElement("h3");
   var body = document.createElement("p");
   var starring = document.createElement("p");
+  var trailerDiv = document.createElement("div");
   var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
   var bodyText = document.createTextNode(inputObj.Plot);
   var starringText = document.createTextNode(inputObj.Actors);
-  var closeSpan = document.createElement("span");
+  movieDisplay.setAttribute("class", "panel-body");
   container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
-  closeSpan.setAttribute("class", "glyphicon glyphicon-remove");
-  container.setAttribute("data-id", inputObj.imdbID);
-  closeSpan.setAttribute("data-id", inputObj.imdbID);
+  trailerDiv.setAttribute("id", "trailer");
   starring.appendChild(starringText);
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
   caption.appendChild(starring);
   caption.appendChild(body);
-  caption.appendChild(closeSpan);
+  caption.appendChild(trailerDiv);
   outterDiv.appendChild(movieImage);
   container.appendChild(outterDiv);
   container.appendChild(caption);
-  movieDisplay.insertBefore(container, movieDisplay.firstChild);
-  closeSpan.addEventListener("click", removeAMovie);
+  movieDisplay.appendChild(container);
   getTrailer(inputObj);
 }
 
 function getTrailer(inputObj){
+  var xhr = new XMLHttpRequest();
   xhr.open("GET", "/profile/" + inputObj.imdbID);
   xhr.send();
   xhr.addEventListener("load", trailerResponse);
 }
 
+function trailerResponse(e){
+  var res = JSON.parse(e.target.response);
+  var trailerDiv = document.getElementById("trailer");
+  trailerDiv.innerHTML = res.Assets[0].EmbedCodes[0].EmbedHTML;
+}
 
 
 function addMovieToList(e){
