@@ -73,7 +73,7 @@ function removeAll(inputId){
 
 function getMovieData(movieId){
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=full&r=json");
+  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=full&r=json&tomatoes=true");
   xhr.send();
   xhr.addEventListener("load", addMovieData);
 }
@@ -82,6 +82,7 @@ function addMovieData(e){
   var inputObj = JSON.parse(e.target.response);
   movieDataArray.push(inputObj);
   displayOneMovie(inputObj);
+  console.log(movieDataArray);
 }
 
 function displayOneMovie(inputObj){
@@ -119,6 +120,51 @@ function displayOneMovie(inputObj){
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
   closeSpan.addEventListener("click", removeAMovie);
 }
+
+function displayProfile(inputObj){
+  var movieDisplay = document.getElementById("profile-page");
+  var container = document.createElement("div");
+  var outterDiv = document.createElement("div");
+  var movieImage = document.createElement("img");
+  var caption = document.createElement("div");
+  var header = document.createElement("h3");
+  var body = document.createElement("p");
+  var starring = document.createElement("p");
+  var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
+  var bodyText = document.createTextNode(inputObj.Plot);
+  var starringText = document.createTextNode(inputObj.Actors);
+  var closeSpan = document.createElement("span");
+  container.setAttribute("class", "col-md-12 more-margin");
+  movieImage.setAttribute("src", inputObj.Poster);
+  movieImage.setAttribute("class", "img-responsive");
+  caption.setAttribute("class", "col-md-9");
+  outterDiv.setAttribute("class", "col-md-3");
+  body.setAttribute("class", "body-text");
+  closeSpan.setAttribute("class", "glyphicon glyphicon-remove");
+  container.setAttribute("data-id", inputObj.imdbID);
+  closeSpan.setAttribute("data-id", inputObj.imdbID);
+  starring.appendChild(starringText);
+  body.appendChild(bodyText);
+  header.appendChild(headerText);
+  caption.appendChild(header);
+  caption.appendChild(starring);
+  caption.appendChild(body);
+  caption.appendChild(closeSpan);
+  outterDiv.appendChild(movieImage);
+  container.appendChild(outterDiv);
+  container.appendChild(caption);
+  movieDisplay.insertBefore(container, movieDisplay.firstChild);
+  closeSpan.addEventListener("click", removeAMovie);
+  getTrailer(inputObj);
+}
+
+function getTrailer(inputObj){
+  xhr.open("GET", "/profile/" + inputObj.imdbID);
+  xhr.send();
+  xhr.addEventListener("load", trailerResponse);
+}
+
+
 
 function addMovieToList(e){
   var imdbId;
