@@ -138,8 +138,8 @@ function displayOneMovie(inputObj){
 }
 
 function displayProfile(e){
+  removeAll("profile-page");
   var inputObj = movieDataArray[e.target.getAttribute("data-id")];
-  console.log(inputObj);
   var movieDisplay = document.getElementById("profile-page");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
@@ -214,6 +214,11 @@ function removeAMovie(e){
   }
   moviesArray = _.without(moviesArray, whereIam.getAttribute("data-id"));
   movieDisplay.removeChild(whereIam);
+  for (var i = 0 ; i < movieDataArray.length; i++){
+    if(movieDataArray[i].imdbID == whereIam.getAttribute("data-id")){
+      movieDataArray = _.without(movieDataArray, movieDataArray[i]);
+    }
+  }
   var copyBox = document.getElementById("copy-text");
   copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
 }
