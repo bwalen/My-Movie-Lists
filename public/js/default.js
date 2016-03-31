@@ -230,10 +230,31 @@ function copySession(e){
   copyBox.value = "Copy Successful";
 }
 
+function sorter(e){
+  if(e.target.getAttribute("id") == "sort-title"){
+    movieDataArray = _.sortBy(movieDataArray, "Title").reverse();
+  }
+  if(e.target.getAttribute("id") == "sort-date"){
+    movieDataArray = _.sortBy(movieDataArray, "Year");
+  }
+  if(e.target.getAttribute("id") == "sort-imdb"){
+    movieDataArray = _.sortBy(movieDataArray, "imdbRating");
+  }
+  if(e.target.getAttribute("id") == "sort-rtr"){
+    movieDataArray = _.sortBy(movieDataArray, "tomatoRating");
+  }
+  removeAll("movie-body");
+  for(var i = 0; i < movieDataArray.length; i++){
+    displayOneMovie(movieDataArray[i]);
+  }
+}
+
 var searchButton = document.getElementById("search-button");
 var copyButton = document.getElementById("copy-button");
+var sortList = document.getElementById("sort-list");
 searchButton.addEventListener("click", search);
 copyButton.addEventListener("click", copySession);
+sortList.addEventListener("click", sorter);
 var moviesArray;
 var movieDataArray = [];
 loadMovieArray();
