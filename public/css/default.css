@@ -14,3 +14,13 @@
 .more-margin{
   margin: 5px;
 }
+
+.close{
+  position: relative;
+  top: 5px;
+  right: 5px;
+}
+
+.width{
+  width: 100%;
+}

@@ -40,7 +40,6 @@ function displayOneSearch(inputObject){
   var innerDiv = document.createElement("div");
   var mediaHeading = document.createElement("h5");
   var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
-//  var bodyText = document.createTextNode()
   searchResults.setAttribute("class" , "more-margin");
   container.setAttribute("class" , "media");
   container.setAttribute("data-id", inputObject.imdbID);
@@ -61,6 +60,22 @@ function displayOneSearch(inputObject){
   container.appendChild(innerDiv);
   searchResults.appendChild(container);
   container.addEventListener("click", addMovieToList);
+}
+
+function addMovieToList(e){
+  var imdbId;
+  if(e.target.parentNode.getAttribute("data-id")){
+    imdbId = e.target.parentNode.getAttribute("data-id");
+  }
+  else if(e.target.parentNode.parentNode.getAttribute("data-id")){
+    imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
+  }
+  if(_.contains(moviesArray, imdbId) == false){
+    moviesArray.push(imdbId);
+    var copyBox = document.getElementById("copy-text");
+    copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+    getMovieData(imdbId);
+  }
 }
 
 function removeAll(inputId){
@@ -104,7 +119,7 @@ function displayOneMovie(inputObj){
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
-  closeSpan.setAttribute("class", "glyphicon glyphicon-remove");
+  closeSpan.setAttribute("class", "close glyphicon glyphicon-remove");
   container.setAttribute("data-id", inputObj.imdbID);
   closeSpan.setAttribute("data-id", inputObj.imdbID);
   starring.appendChild(starringText);
@@ -113,7 +128,7 @@ function displayOneMovie(inputObj){
   caption.appendChild(header);
   caption.appendChild(starring);
   caption.appendChild(body);
-  caption.appendChild(closeSpan);
+  container.appendChild(closeSpan);
   outterDiv.appendChild(movieImage);
   container.appendChild(outterDiv);
   container.appendChild(caption);
@@ -123,7 +138,6 @@ function displayOneMovie(inputObj){
 }
 
 function displayProfile(e){
-  removeAll("profile-page");
   var inputObj = movieDataArray[e.target.getAttribute("data-id")];
   console.log(inputObj);
   var movieDisplay = document.getElementById("profile-page");
@@ -142,28 +156,40 @@ function displayProfile(e){
   var directedP = document.createElement("p");
   var ratingP = document.createElement("p");
   var rating = document.createTextNode("Rated: " + inputObj.Rated);
+  var imdbRatingP = document.createElement("a");
+  var imdbRating = document.createTextNode("IMDB rating: " + inputObj.imdbRating + "/10");
+  var closeSpan = document.createElement("span");
+  imdbRatingP.setAttribute("href", "http://www.imdb.com/title/" + inputObj.imdbID + "/");
+  imdbRatingP.setAttribute("target", "_blank");
   movieDisplay.setAttribute("class", "panel-body");
-  container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   trailerDiv.setAttribute("id", "trailer");
+  closeSpan.setAttribute("class", "close glyphicon glyphicon-remove");
+  imdbRatingP.appendChild(imdbRating);
   directedP.appendChild(directedText);
   ratingP.appendChild(rating);
   starring.appendChild(starringText);
   starring.appendChild(directedP);
   starring.appendChild(ratingP);
+  starring.appendChild(imdbRatingP);
   body.appendChild(bodyText);
+  starring.appendChild(body);
   header.appendChild(headerText);
   caption.appendChild(header);
   caption.appendChild(starring);
-  caption.appendChild(body);
   outterDiv.appendChild(movieImage);
-  outterDiv.appendChild(trailerDiv);
+  container.appendChild(closeSpan);
   container.appendChild(outterDiv);
   container.appendChild(caption);
+  container.appendChild(trailerDiv);
   movieDisplay.appendChild(container);
+  closeSpan.addEventListener("click", function(){
+    movieDisplay.setAttribute("class", "hidden");
+    removeAll("profile-page");
+  });
   getTrailer(inputObj);
 }
 
@@ -178,21 +204,6 @@ function trailerResponse(e){
   var res = JSON.parse(e.target.response);
   var trailerDiv = document.getElementById("trailer");
   trailerDiv.innerHTML = res.Assets[0].EmbedCodes[0].EmbedHTML;
-}
-
-
-function addMovieToList(e){
-  var imdbId;
-  if(e.target.parentNode.getAttribute("data-id")){
-    imdbId = e.target.parentNode.getAttribute("data-id");
-  }
-  else if(e.target.parentNode.parentNode.getAttribute("data-id")){
-    imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
-  }
-  moviesArray.push(imdbId);
-  var copyBox = document.getElementById("copy-text");
-  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
-  getMovieData(imdbId);
 }
 
 function removeAMovie(e){
