@@ -1,7 +1,7 @@
 function search(){
   var searchText = document.getElementById("search-text");
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "/search/" + searchText.value);
+  xhr.open("GET", "http://www.omdbapi.com/?s=" + searchText.value + "&type=movie&page=1&y=&plot=short&r=json&tomatoes=true" );
   xhr.send();
   xhr.addEventListener("load", function(){
     displaySearchResults(JSON.parse(xhr.response));
@@ -23,6 +23,24 @@ function loadMovieArray(){
     moviesArray = JSON.parse(xhr.response);
     displayMovies(JSON.parse(xhr.response));
   })
+}
+
+function displayMovieLists(inputArray){
+  removeAll("search-results");
+  for(var i = 0; i < inputArray.length; i++){
+    getListData(inputArray[i]);
+  }
+}
+
+function getListData(imdbid){
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://www.omdbapi.com/?i=" + imdbid + "&plot=full&r=json&tomatoes=true");
+  xhr.send();
+  xhr.addEventListener("load", processListData);
+}
+
+function processListData(e){
+  displayOneSearch(JSON.parse(e.target.response));
 }
 
 function displayMovies(array){
@@ -252,9 +270,12 @@ function sorter(e){
 var searchButton = document.getElementById("search-button");
 var copyButton = document.getElementById("copy-button");
 var sortList = document.getElementById("sort-list");
+var topLists = document.getElementById("imdb-fifty");
 searchButton.addEventListener("click", search);
 copyButton.addEventListener("click", copySession);
 sortList.addEventListener("click", sorter);
-var moviesArray;
+topLists.addEventListener("click", function(){ displayMovieLists(imdbTopFifty)});
+var moviesArray = [];
 var movieDataArray = [];
+var imdbTopFifty = ["tt0111161","tt0068646","tt0071562","tt0468569","tt0108052","tt0050083","tt0110912","tt0167260","tt0120737","tt0060196","tt0137523","tt0080684","tt0109830","tt1375666","tt0167261","tt0073486","tt0099685","tt0133093","tt0047478","tt0076759","tt0317248","tt0114369","tt0102926","tt0038650","tt0114814","tt0118799","tt0110413","tt0064116","tt0245429","tt0120815","tt0816692","tt0034583","tt0120586","tt0021749","tt0054215","tt0082971","tt0047396","tt1675434","tt0027977","tt0120689","tt0103064","tt0253474","tt0407887","tt0088763","tt2582802","tt0209144","tt0172495","tt0078788","tt0482571","tt0057012"];
 loadMovieArray();
