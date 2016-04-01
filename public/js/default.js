@@ -90,6 +90,8 @@ function addMovieToList(e){
   }
   if(_.contains(moviesArray, imdbId) == false){
     moviesArray.push(imdbId);
+    document.cookie = ("list=" + moviesArray);
+    document.cookie = ("expires=Fri, 31 Dec 9999 23:59:59 GMT")
     var copyBox = document.getElementById("copy-text");
     copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
     getMovieData(imdbId);
