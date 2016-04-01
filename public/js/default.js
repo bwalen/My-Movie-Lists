@@ -133,7 +133,7 @@ function displayOneMovie(inputObj){
   container.setAttribute("class", "col-md-12 more-margin");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
-  movieImage.setAttribute("data-id", movieDataArray.length-1 );
+  movieImage.setAttribute("data-id", inputObj.imdbID );
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
@@ -152,12 +152,20 @@ function displayOneMovie(inputObj){
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
   closeSpan.addEventListener("click", removeAMovie);
-  movieImage.addEventListener("click", displayProfile);
+  movieImage.addEventListener("click", whichProfile);
 }
 
-function displayProfile(e){
+function whichProfile(e){
+  var imdb = e.target.getAttribute("data-id");
+  for (var i = 0; i < movieDataArray.length; i++){
+    if( imdb == movieDataArray[i].imdbID){
+      displayProfile(movieDataArray[i]);
+    }
+  }
+}
+
+function displayProfile(inputObj){
   removeAll("profile-page");
-  var inputObj = movieDataArray[e.target.getAttribute("data-id")];
   var movieDisplay = document.getElementById("profile-page");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
