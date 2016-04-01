@@ -90,8 +90,8 @@ function addMovieToList(e){
   }
   if(_.contains(moviesArray, imdbId) == false){
     moviesArray.push(imdbId);
-    document.cookie = ("list=" + moviesArray);
-    document.cookie = ("expires=Fri, 31 Dec 9999 23:59:59 GMT")
+    document.cookie = ("list=" + JSON.stringify(moviesArray));
+    document.cookie = ("max-age=31536e3");
     var copyBox = document.getElementById("copy-text");
     copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
     getMovieData(imdbId);
@@ -260,6 +260,7 @@ function removeAMovie(e){
   }
   var copyBox = document.getElementById("copy-text");
   copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+  document.cookie = ("list=" + JSON.stringify(moviesArray));
 }
 
 function copySession(e){
