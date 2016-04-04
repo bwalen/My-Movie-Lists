@@ -158,17 +158,24 @@ function displayOneMovie(inputObj){
 }
 
 function whichProfile(e){
+  var movieDisplay = document.getElementById("movie-body");
   var imdb = e.target.getAttribute("data-id");
   for (var i = 0; i < movieDataArray.length; i++){
     if( imdb == movieDataArray[i].imdbID){
-      displayProfile(movieDataArray[i]);
+      var whereIam = movieDisplay.firstChild;
+      while(whereIam.getAttribute("data-id") != e.target.getAttribute("data-id")){
+        whereIam = whereIam.nextSibling;
+      }
+      whereIam.appendChild(displayProfile(movieDataArray[i]));
     }
   }
+
+
 }
 
 function displayProfile(inputObj){
   removeAll("profile-page");
-  var movieDisplay = document.getElementById("profile-page");
+  var movieDisplay = document.createElement("div");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
   var movieImage = document.createElement("img");
@@ -195,7 +202,7 @@ function displayProfile(inputObj){
   tomatoRatingP.setAttribute("href", inputObj.tomatoURL);
   imdbRatingP.setAttribute("href", "http://www.imdb.com/title/" + inputObj.imdbID + "/");
   imdbRatingP.setAttribute("target", "_blank");
-  movieDisplay.setAttribute("class", "panel-body");
+  movieDisplay.setAttribute("class", "col-md-12");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
@@ -226,10 +233,10 @@ function displayProfile(inputObj){
   container.appendChild(caption);
   movieDisplay.appendChild(container);
   closeSpan.addEventListener("click", function(){
-    movieDisplay.setAttribute("class", "hidden");
-    removeAll("profile-page");
+    movieDisplay.parentNode.removeChild(movieDisplay);
   });
   getTrailer(inputObj);
+  return(movieDisplay);
 }
 
 function getTrailer(inputObj){
