@@ -242,14 +242,34 @@ function getTrailer(inputObj){
 function trailerResponse(e){
   var res = e.target.response;
   res = JSON.parse(res);
+  console.log(res);
   var trailerDiv = document.getElementById("trailer");
   trailerDiv.innerHTML = res[0].Assets[0].EmbedCodes[0].EmbedHTML;
   processPurchaseData(res[1]);
 }
 
 function processPurchaseData(inputObj){
-  console.log(inputObj);
+  var movieStream = document.getElementById("movie-stream");
+  //free sources
+  if(inputObj.free_web_sources){
+    var freeHeader = document.getElementById("h5");
+    var freeHeaderText = document.createTextNode("Stream Free");
+    freeHeader.appendChild(freeHeaderText);
+    movieStream.appendChild(freeHeader);
+    for (var i = 0; i<inputObj.free_web_sources.length; i++){
+      movieStream.appendChild(streamElement(inputObj.free_web_sources[i]));
+    }
+  }
 
+
+}
+
+function streamElement(inputObj){
+  var sourceLink = document.createElement("a");
+  var sourceText = document.createTextNode(inputObj.display_name);
+  sourceLink.setAttribute("href", inputObj.link);
+  sourceLink.appendChild(sourceText);
+  return(sourceLink);
 }
 
 function removeAMovie(e){
