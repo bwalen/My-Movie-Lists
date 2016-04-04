@@ -16,13 +16,31 @@ app.get("/session/:search", function(req, res){
 });
 
 app.get("/profile/:id", function(req, res){
+  var profileData = [];
+  var idData;
   request("https://ee.internetvideoarchive.net/api/expressstandard/" + req.params.id + "?appid=f6f1cc712ad6&idtype=12", function(error, response, body){
-    res.send(body);
+    if (!error && response.statusCode == 200) {
+      profileData.push(JSON.parse(body));
+      console.log("test1");
+    }
+  })
+  request("http://api-public.guidebox.com/v1.43/US/rK5aa0fSTWUNFOjiiL2UNae5YTYsXxxF/search/movie/id/imdb/" + req.params.id, function (error, response, body){
+    if (!error && response.statusCode == 200) {
+      idData = JSON.parse(body);
+    }
+    if(idData.id){
+      request("http://api-public.guidebox.com/v1.43/US/rK5aa0fSTWUNFOjiiL2UNae5YTYsXxxF/movie/" + idData.id, function(error, response, body){
+        if (!error && response.statusCode == 200) {
+          profileData.push(JSON.parse(body));
+          console.log(profileData)
+          res.send(JSON.stringify(profileData));
+        }
+      })
+    }
   })
 });
 
 app.get("/load" , function(req, res){
-  console.log(req.cookies);
   if(req.cookies.list){
     listArray = JSON.parse(req.cookies.list);
   }

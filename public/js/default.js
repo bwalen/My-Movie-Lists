@@ -200,6 +200,7 @@ function displayProfile(inputObj){
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
+  outterDiv.setAttribute("id", "movie-stream");
   trailerDiv.setAttribute("id", "trailer");
   closeSpan.setAttribute("class", "close glyphicon glyphicon-remove");
   tomatoRatingP.appendChild(tomatoText);
@@ -239,9 +240,16 @@ function getTrailer(inputObj){
 }
 
 function trailerResponse(e){
-  var res = JSON.parse(e.target.response);
+  var res = e.target.response;
+  res = JSON.parse(res);
   var trailerDiv = document.getElementById("trailer");
-  trailerDiv.innerHTML = res.Assets[0].EmbedCodes[0].EmbedHTML;
+  trailerDiv.innerHTML = res[0].Assets[0].EmbedCodes[0].EmbedHTML;
+  processPurchaseData(res[1]);
+}
+
+function processPurchaseData(inputObj){
+  console.log(inputObj);
+
 }
 
 function removeAMovie(e){
