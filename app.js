@@ -8,30 +8,27 @@ var listArray = ["tt0111161","tt0068646","tt0071562","tt0468569","tt0108052","tt
 
 app.use(cookieParser());
 
-app.use("/public", function(req,res,next){
-  if(req.cookies.list){
-    listArray = JSON.parse(req.cookies.list);
-  }
-  next();
-})
-
-app.use(express.static("./"));
+app.use(express.static("./public/"));
 
 app.get("/session/:search", function(req, res){
   listArray = JSON.parse(req.params.search);
-  res.redirect("/public/index.html");
+  res.redirect("/index.html");
 });
 
 app.get("/profile/:id", function(req, res){
   request("https://ee.internetvideoarchive.net/api/expressstandard/" + req.params.id + "?appid=f6f1cc712ad6&idtype=12", function(error, response, body){
     res.send(body);
   })
-})
+});
 
 app.get("/load" , function(req, res){
+  console.log(req.cookies);
+  if(req.cookies.list){
+    listArray = JSON.parse(req.cookies.list);
+  }
   res.send(JSON.stringify(listArray));
   listArray = [];
-})
+});
 
 app.listen(8080, function(){
   console.log("Listening on port 8080.");

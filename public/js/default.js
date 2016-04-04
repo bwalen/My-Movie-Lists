@@ -88,7 +88,7 @@ function addMovieToList(e){
   else if(e.target.parentNode.parentNode.getAttribute("data-id")){
     imdbId = e.target.parentNode.parentNode.getAttribute("data-id");
   }
-  if(_.contains(moviesArray, imdbId) == false){
+  if(_.contains(moviesArray, imdbId) == false  && imdbId != undefined){
     moviesArray.push(imdbId);
     document.cookie = ("list=" + JSON.stringify(moviesArray));
     document.cookie = ("max-age=31536e3");
@@ -168,7 +168,6 @@ function whichProfile(e){
 
 function displayProfile(inputObj){
   removeAll("profile-page");
-  console.log(inputObj);
   var movieDisplay = document.getElementById("profile-page");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
