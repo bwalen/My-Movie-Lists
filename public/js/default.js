@@ -174,7 +174,6 @@ function whichProfile(e){
 }
 
 function displayProfile(inputObj){
-  removeAll("profile-page");
   var movieDisplay = document.createElement("div");
   var container = document.createElement("div");
   var outterDiv = document.createElement("div");
