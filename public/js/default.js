@@ -242,17 +242,21 @@ function getTrailer(inputObj){
 function trailerResponse(e){
   var res = e.target.response;
   res = JSON.parse(res);
-  console.log(res);
-  var trailerDiv = document.getElementById("trailer");
-  trailerDiv.innerHTML = res[0].Assets[0].EmbedCodes[0].EmbedHTML;
-  processPurchaseData(res[1]);
+  if(res.length == 2){
+    var trailerDiv = document.getElementById("trailer");
+    trailerDiv.innerHTML = res[0].Assets[0].EmbedCodes[0].EmbedHTML;
+    processPurchaseData(res[1]);
+  }
+  else{
+    processPurchaseData(res[0]);
+  }
 }
 
 function processPurchaseData(inputObj){
   var movieStream = document.getElementById("movie-stream");
   //free sources
-  if(inputObj.free_web_sources){
-    var freeHeader = document.getElementById("h5");
+  if(inputObj.free_web_sources.length > 0){
+    var freeHeader = document.createElement("h5");
     var freeHeaderText = document.createTextNode("Stream Free");
     freeHeader.appendChild(freeHeaderText);
     movieStream.appendChild(freeHeader);
@@ -260,15 +264,34 @@ function processPurchaseData(inputObj){
       movieStream.appendChild(streamElement(inputObj.free_web_sources[i]));
     }
   }
-
-
+  if(inputObj.subscription_web_sources.length > 0){
+    var subHeader = document.createElement("h5");
+    var subText = document.createTextNode("View with subscription");
+    subHeader.appendChild(subText);
+    movieStream.appendChild(subHeader);
+    for (var i = 0; i < inputObj.subscription_web_sources.length; i++){
+      movieStream.appendChild(streamElement(inputObj.subscription_web_sources[i]));
+    }
+  }
+  if(inputObj.purchase_web_sources.length > 0){
+    var purchaseHeader = document.createElement("h5");
+    var purchaseText = document.createTextNode("Purchase");
+    purchaseHeader.appendChild(purchaseText);
+    movieStream.appendChild(purchaseHeader);
+    for (var i = 0; i < inputObj.purchase_web_sources.length; i++){
+      movieStream.appendChild(streamElement(inputObj.purchase_web_sources[i]));
+    }
+  }
 }
 
 function streamElement(inputObj){
   var sourceLink = document.createElement("a");
   var sourceText = document.createTextNode(inputObj.display_name);
+  var lineBreak = document.createElement("br");
   sourceLink.setAttribute("href", inputObj.link);
+  sourceLink.setAttribute("target", "_blank");
   sourceLink.appendChild(sourceText);
+  sourceLink.appendChild(lineBreak);
   return(sourceLink);
 }
 
