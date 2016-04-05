@@ -99,7 +99,7 @@ function addMovieToList(e){
 }
 
 function removeAll(inputId){
-  //deletes all children below the inputId
+  //deletes all children of the element with the inputId
   var deleteContainer = document.getElementById(inputId);
   while (deleteContainer.firstChild){
     deleteContainer.removeChild(deleteContainer.firstChild);
@@ -166,11 +166,10 @@ function whichProfile(e){
       while(whereIam.getAttribute("data-id") != e.target.getAttribute("data-id")){
         whereIam = whereIam.nextSibling;
       }
-      whereIam.appendChild(displayProfile(movieDataArray[i]));
+      movieDisplay.insertBefore(displayProfile(movieDataArray[i]), whereIam);
+      movieDisplay.removeChild(whereIam);
     }
   }
-
-
 }
 
 function displayProfile(inputObj){
@@ -201,7 +200,8 @@ function displayProfile(inputObj){
   tomatoRatingP.setAttribute("href", inputObj.tomatoURL);
   imdbRatingP.setAttribute("href", "http://www.imdb.com/title/" + inputObj.imdbID + "/");
   imdbRatingP.setAttribute("target", "_blank");
-  movieDisplay.setAttribute("class", "col-md-12");
+  movieDisplay.setAttribute("class", "col-md-12 more-margin");
+  movieDisplay.setAttribute("id", "details");
   movieImage.setAttribute("src", inputObj.Poster);
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
@@ -232,7 +232,10 @@ function displayProfile(inputObj){
   container.appendChild(caption);
   movieDisplay.appendChild(container);
   closeSpan.addEventListener("click", function(){
-    movieDisplay.parentNode.removeChild(movieDisplay);
+    removeAll("movie-body");
+    for(var i = 0; i < movieDataArray.length; i++){
+      displayOneMovie(movieDataArray[i]);
+    }
   });
   getTrailer(inputObj);
   return(movieDisplay);
@@ -270,6 +273,7 @@ function processPurchaseData(inputObj){
       movieStream.appendChild(streamElement(inputObj.free_web_sources[i]));
     }
   }
+  //subscription sources
   if(inputObj.subscription_web_sources.length > 0){
     var subHeader = document.createElement("h5");
     var subText = document.createTextNode("View with subscription");
@@ -279,6 +283,7 @@ function processPurchaseData(inputObj){
       movieStream.appendChild(streamElement(inputObj.subscription_web_sources[i]));
     }
   }
+  //purchase sources
   if(inputObj.purchase_web_sources.length > 0){
     var purchaseHeader = document.createElement("h5");
     var purchaseText = document.createTextNode("Purchase");
@@ -350,6 +355,7 @@ var copyButton = document.getElementById("copy-button");
 var sortList = document.getElementById("sort-list");
 var topLists = document.getElementById("imdb-fifty");
 var rottenLists = document.getElementById("rotten-fifty");
+var detailsPage;
 searchButton.addEventListener("click", search);
 copyButton.addEventListener("click", copySession);
 sortList.addEventListener("click", sorter);
