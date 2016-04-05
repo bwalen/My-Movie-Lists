@@ -31,7 +31,9 @@ function loadMovieArray(){
 function displayMovieLists(inputArray){
   removeAll("search-results");
   for(var i = 0; i < inputArray.length; i++){
-    getListData(inputArray[i]);
+    if(inputArray[i]!=undefined){
+      getListData(inputArray[i]);
+    }
   }
 }
 
@@ -161,6 +163,8 @@ function displayOneMovie(inputObj){
   container.appendChild(outterDiv);
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
+  var copyBox = document.getElementById("copy-text");
+  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
   closeSpan.addEventListener("click", removeAMovie);
   movieImage.addEventListener("click", whichProfile);
 }

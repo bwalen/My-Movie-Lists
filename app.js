@@ -62,5 +62,15 @@ function getPopular(){
       })
     }
   })
+  
+  request("http://api.themoviedb.org/3/discover/movie?api_key=b2537b210a995e8a2dc935dfae46e48d&page=2&sort_by=popularity.desc", function(error,response,body){
+    var returnedData = JSON.parse(body);
+    for (var i = 0; i < returnedData.results.length; i++){
+      request("http://api.themoviedb.org/3/movie/"+ returnedData.results[i].id + "?api_key=b2537b210a995e8a2dc935dfae46e48d", function(error, response, body){
+        var moreData = JSON.parse(body);
+        array.push(moreData.imdb_id);
+      })
+    }
+  })
   return array;
 }
