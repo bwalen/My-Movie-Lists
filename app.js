@@ -75,7 +75,7 @@ function timedPopular(){
     console.log("Loading..." + year);
     popularMoviesByYear.push(getPopularYear(year));
     year--;
-    if(year <= 1950){
+    if(year <= 1940){
       clearInterval(intervalTimer);
     }
   }, 10000)

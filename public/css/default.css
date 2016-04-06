@@ -33,5 +33,19 @@
 }
 
 body{
-  background-color: #f0f0f0;
+  background-color: #ffffff;
+}
+
+h1{
+  color: #000000;
+}
+
+h4{
+  color: #000000;
+  font-family: Georgia;
+  font-weight: bold;
+}
+
+h5{
+  color: #000000;
 }

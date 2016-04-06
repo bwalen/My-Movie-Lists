@@ -143,7 +143,7 @@ function displayOneMovie(inputObj){
   var outterDiv = document.createElement("div");
   var movieImage = document.createElement("img");
   var caption = document.createElement("div");
-  var header = document.createElement("h5");
+  var header = document.createElement("h4");
   var body = document.createElement("p");
   var starring = document.createElement("p");
   var headerText = document.createTextNode(inputObj.Title + " (" + inputObj.Year +")");
@@ -207,7 +207,7 @@ function displayProfile(inputObj){
   var outterDiv = document.createElement("div");
   var movieImage = document.createElement("img");
   var caption = document.createElement("div");
-  var header = document.createElement("h3");
+  var header = document.createElement("h4");
   var body = document.createElement("p");
   var starring = document.createElement("p");
   var trailerDiv = document.createElement("div");
@@ -219,7 +219,7 @@ function displayProfile(inputObj){
   var ratingP = document.createElement("p");
   var rating = document.createTextNode("Rated: " + inputObj.Rated);
   var imdbRatingP = document.createElement("a");
-  var imdbRating = document.createTextNode("IMDB rating: " + inputObj.imdbRating + " / 10");
+  var imdbRating = document.createTextNode("IMDB: " + inputObj.imdbRating + " / 10");
   var closeSpan = document.createElement("span");
   var runtimeP = document.createElement("p");
   var runtimeText = document.createTextNode("Runtime: " + inputObj.Runtime);
@@ -229,7 +229,7 @@ function displayProfile(inputObj){
   tomatoRatingP.setAttribute("href", inputObj.tomatoURL);
   imdbRatingP.setAttribute("href", "http://www.imdb.com/title/" + inputObj.imdbID + "/");
   imdbRatingP.setAttribute("target", "_blank");
-  movieDisplay.setAttribute("class", "col-md-12 more-margin");
+  movieDisplay.setAttribute("class", "col-md-12 more-margin profile");
   movieDisplay.setAttribute("id", "details");
   if(inputObj.Poster== "N/A" ){
     movieImage.setAttribute("src", "images/movie-1.png");
