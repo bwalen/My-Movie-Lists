@@ -23,8 +23,10 @@ function loadMovieArray(){
     var array = JSON.parse(xhr.response);
     moviesArray = array[0];
     mostPopularArray = array[1];
+    mostPopularByYear = array[2];
     displayMovies(moviesArray);
     displayMovieLists(mostPopularArray);
+    displayYears();
   })
 }
 
@@ -103,7 +105,7 @@ function addMovieToList(e){
     document.cookie = ("list=" + JSON.stringify(moviesArray));
     document.cookie = ("max-age=31536e3");
     var copyBox = document.getElementById("copy-text");
-    copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+    copyBox.value = "localhost:1337/session/" + JSON.stringify(moviesArray);
     getMovieData(imdbId);
   }
 }
@@ -164,7 +166,7 @@ function displayOneMovie(inputObj){
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
   var copyBox = document.getElementById("copy-text");
-  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+  copyBox.value = "localhost:1337/session/" + JSON.stringify(moviesArray);
   closeSpan.addEventListener("click", removeAMovie);
   movieImage.addEventListener("click", whichProfile);
 }
@@ -206,13 +208,13 @@ function displayProfile(inputObj){
   var ratingP = document.createElement("p");
   var rating = document.createTextNode("Rated: " + inputObj.Rated);
   var imdbRatingP = document.createElement("a");
-  var imdbRating = document.createTextNode("IMDB rating: " + inputObj.imdbRating + "/10");
+  var imdbRating = document.createTextNode("IMDB rating: " + inputObj.imdbRating + " / 10");
   var closeSpan = document.createElement("span");
   var runtimeP = document.createElement("p");
   var runtimeText = document.createTextNode("Runtime: " + inputObj.Runtime);
   var tomatoRatingP = document.createElement("a");
   var tomatoRatingPP = document.createElement("p");
-  var tomatoText = document.createTextNode("Rotten Tomatoes Rating: " + inputObj.tomatoRating);
+  var tomatoText = document.createTextNode("Rotten Tomatoes Rating: " + inputObj.tomatoRating + " / 10");
   tomatoRatingP.setAttribute("href", inputObj.tomatoURL);
   imdbRatingP.setAttribute("href", "http://www.imdb.com/title/" + inputObj.imdbID + "/");
   imdbRatingP.setAttribute("target", "_blank");
@@ -336,7 +338,7 @@ function removeAMovie(e){
     }
   }
   var copyBox = document.getElementById("copy-text");
-  copyBox.value = "localhost:8080/session/" + JSON.stringify(moviesArray);
+  copyBox.value = "localhost:1337/session/" + JSON.stringify(moviesArray);
   document.cookie = ("list=" + JSON.stringify(moviesArray));
 }
 
@@ -398,21 +400,44 @@ function differentTitle(newTitleText){
   document.cookie = ("list=" + JSON.stringify(moviesArray));
 }
 
+function displayYears(){
+  var where = document.getElementById("years");
+  var button = document.getElementById("year-button");
+  for(var i = 0; i < mostPopularByYear.length; i++){
+    where.appendChild(generateYearElement(2016 - i));
+  }
+  button.addEventListener("click", function(){
+    var year = where.options[where.selectedIndex].value;
+    displayMovieLists(mostPopularByYear[2016-year]);
+  })
+}
+
+function generateYearElement(year){
+  //var where = document.getElementById("years");
+  var optionElement = document.createElement("option");
+  var optionText = document.createTextNode(year);
+  optionElement.appendChild(optionText);
+  return optionElement;
+}
+
 var searchButton = document.getElementById("search-button");
 var copyButton = document.getElementById("copy-button");
 var sortList = document.getElementById("sort-list");
 var topLists = document.getElementById("imdb-fifty");
 var rottenLists = document.getElementById("rotten-fifty");
 var changeText = document.getElementById("change-title");
+var mostPopular = document.getElementById("most-popular");
 searchButton.addEventListener("click", search);
 copyButton.addEventListener("click", copySession);
 sortList.addEventListener("click", sorter);
 topLists.addEventListener("click", function(){ displayMovieLists(imdbTopFifty)});
 rottenLists.addEventListener("click", function(){ displayMovieLists(tomatoesTopFifty)});
+mostPopular.addEventListener("click", function(){ displayMovieLists(mostPopularArray)});
 changeText.addEventListener("click", changeTitle);
 var moviesArray = [];
 var movieDataArray = [];
 var mostPopularArray = [];
+var mostPopularByYear = [];
 var imdbTopFifty = ["tt0111161","tt0068646","tt0071562","tt0468569","tt0108052","tt0050083","tt0110912","tt0167260","tt0120737","tt0060196","tt0137523","tt0080684","tt0109830","tt1375666","tt0167261","tt0073486","tt0099685","tt0133093","tt0047478","tt0076759","tt0317248","tt0114369","tt0102926","tt0038650","tt0114814","tt0118799","tt0110413","tt0064116","tt0245429","tt0120815","tt0816692","tt0034583","tt0120586","tt0021749","tt0054215","tt0082971","tt0047396","tt1675434","tt0027977","tt0120689","tt0103064","tt0253474","tt0407887","tt0088763","tt2582802","tt0209144","tt0172495","tt0078788","tt0482571","tt0057012","tt0110357","tt0043014","tt0078748","tt0032553","tt0405094","tt0095765","tt1853728","tt0081505","tt0050825","tt0095327","tt0910970","tt1345836","tt0169547","tt0090605","tt0119698","tt0364569","tt0033467","tt0053125","tt0087843","tt0052357","tt0082096","tt0086190","tt0051201","tt0022100","tt0105236","tt0211915","tt0112573","tt0180093","tt0066921","tt0075314","tt0435761","tt0036775","tt0056172","tt0056592","tt0338013","tt0093058","tt0086879","tt0070735","tt0045152","tt0062622","tt0040522","tt0208092","tt0071853","tt0114709","tt0012349","tt0361748","tt0119488","tt0059578","tt0042876","tt0053604"];
 var tomatoesTopFifty = ["tt0032138","tt0041959","tt0033467","tt0010323","tt0042192","tt0027977","tt0068646","tt0083866","tt0017136","tt0045152","tt0025316","tt2096673","tt0037008","tt0058182","tt0029583","tt1065073","tt0053125","tt0059646","tt0029843","tt0024216","tt0058946","tt0033870","tt0042876","tt0047396","tt0120363","tt0032904","tt0043014","tt0435761","tt2948356","tt0026138","tt0040522","tt0053198","tt0047478","tt1049413","tt0022100","tt1020072","tt0040897","tt0075314","tt0050083","tt0065571","tt0032976","tt0044081","tt0048424","tt0021884","tt0063522","tt0266543","tt0119488","tt0057012","tt1125849","tt0026029"];
 loadMovieArray();

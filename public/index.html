@@ -20,6 +20,15 @@
             <div class="btn-group-vertical width" role="group">
               <button type="button" class="btn btn-default" id="imdb-fifty">IMDB Top 100</button>
               <button type="button" class="btn btn-default" id="rotten-fifty">Rotten Tomatoes Top 50</button>
+              <button type="button" class="btn btn-default" id="most-popular">Today's Most Popular Movies</button>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" id="year-button" type="button">Most Popular Movies By Year:</button>
+                </span>
+                <select id = "years" class="form-control">
+<!--years are generated here, it was just faster and cleaner to generate them than to write them all out-->
+                </select>
+                </div>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Sort your list by<span class="caret"></span>
@@ -47,7 +56,7 @@
               <span class="input-group-btn">
                 <button class="hidden btn btn-default" id="title-button" type="button">Change</button>
               </span>
-            <h1 id="title">Your movie lists</h1>
+            <h1 id="title">A Working Title</h1>
             <a id="change-title">Change title</a>
               <div class="container-fluid">
                 <div class="row"  id="movie-body">
