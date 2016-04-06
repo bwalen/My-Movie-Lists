@@ -9,6 +9,7 @@
 
 .body-text{
   font-size: 12px;
+  color: black;
 }
 
 .more-margin{
@@ -23,4 +24,14 @@
 
 .width{
   width: 100%;
+}
+
+.leftbank{
+  height: 100vh;
+  overflow: scroll;
+  position: fixed;
+}
+
+body{
+  background-color: #f0f0f0;
 }

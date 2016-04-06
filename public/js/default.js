@@ -75,7 +75,7 @@ function displayOneSearch(inputObject){
   container.setAttribute("data-id", inputObject.imdbID);
   outterDiv.setAttribute("class", "media-left");
   if (inputObject.Poster == "N/A"){
-    mediaImage.setAttribute("src", "images/blankposter.png");
+    mediaImage.setAttribute("src", "images/movie-1.png");
   }
   else{
     mediaImage.setAttribute("src" , inputObject.Poster);
@@ -85,6 +85,12 @@ function displayOneSearch(inputObject){
   mediaHeading.setAttribute("class", "media-heading");
   mediaHeading.appendChild(headingText);
   innerDiv.appendChild(mediaHeading);
+  if( inputObject.imdbRating ){
+    var imdbP = document.createElement("p");
+    var imdbText = document.createTextNode("IMDB Rating: " + inputObject.imdbRating + " / 10");
+    imdbP.appendChild(imdbText);
+    innerDiv.appendChild(imdbP);
+  }
   outterDiv.appendChild(mediaImage);
   container.appendChild(outterDiv);
   container.appendChild(innerDiv);
@@ -145,7 +151,12 @@ function displayOneMovie(inputObj){
   var starringText = document.createTextNode(inputObj.Actors);
   var closeSpan = document.createElement("span");
   container.setAttribute("class", "col-md-12 more-margin");
-  movieImage.setAttribute("src", inputObj.Poster);
+  if(inputObj.Poster== "N/A" ){
+    movieImage.setAttribute("src", "images/movie-1.png");
+  }
+  else{
+    movieImage.setAttribute("src", inputObj.Poster);
+  }
   movieImage.setAttribute("class", "img-responsive");
   movieImage.setAttribute("data-id", inputObj.imdbID );
   caption.setAttribute("class", "col-md-9");
@@ -220,7 +231,12 @@ function displayProfile(inputObj){
   imdbRatingP.setAttribute("target", "_blank");
   movieDisplay.setAttribute("class", "col-md-12 more-margin");
   movieDisplay.setAttribute("id", "details");
-  movieImage.setAttribute("src", inputObj.Poster);
+  if(inputObj.Poster== "N/A" ){
+    movieImage.setAttribute("src", "images/movie-1.png");
+  }
+  else{
+    movieImage.setAttribute("src", inputObj.Poster);
+  }
   movieImage.setAttribute("class", "img-responsive");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
