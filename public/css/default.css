@@ -31,7 +31,7 @@
 }
 
 #copy-box{
-  width: 40%;
+  width: 45%;
   margin-top: 10px;
 }
 
@@ -72,10 +72,6 @@ body{
   background-color: #ffffff;
 }
 
-h1{
-
-}
-
 h4{
   color: #bf3636;
   font-family: Georgia;
@@ -86,8 +82,4 @@ h5{
   color: #bf3636;
   font-family: Georgia;
   font-weight: bold;
-}
-
-p{
-
 }

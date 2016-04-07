@@ -166,7 +166,6 @@ function displayOneMovie(inputObj){
     movieImage.setAttribute("src", inputObj.Poster);
   }
   movieImage.setAttribute("class", "img-responsive");
-  movieImage.setAttribute("data-id", inputObj.imdbID );
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
@@ -184,23 +183,33 @@ function displayOneMovie(inputObj){
   container.appendChild(outterDiv);
   container.appendChild(caption);
   movieDisplay.insertBefore(container, movieDisplay.firstChild);
+  container.addEventListener("click", whichProfile);
   var copyBox = document.getElementById("copy-text");
   copyBox.value = "localhost:1337/session/" + JSON.stringify(moviesArray);
   closeSpan.addEventListener("click", removeAMovie);
-  movieImage.addEventListener("click", whichProfile);
 }
 
 function whichProfile(e){
   removeAll("movie-body");
+  var imdb;
+  var movieDisplay = document.getElementById("movie-body");
   for(var i = 0; i < movieDataArray.length; i++){
     displayOneMovie(movieDataArray[i]);
   }
   var movieDisplay = document.getElementById("movie-body");
-  var imdb = e.target.getAttribute("data-id");
+  if(e.target.hasAttribute("data-id")){
+    imdb = e.target.getAttribute("data-id");
+  }
+  else if(e.target.parentNode.hasAttribute("data-id")){
+    imdb = e.target.parentNode.getAttribute("data-id");
+  }
+  else if(e.target.parentNode.parentNode.hasAttribute("data-id")){
+    imdb = e.target.parentNode.parentNode.getAttribute("data-id");
+  }
   for (var i = 0; i < movieDataArray.length; i++){
     if( imdb == movieDataArray[i].imdbID){
       var whereIam = movieDisplay.firstChild;
-      while(whereIam.getAttribute("data-id") != e.target.getAttribute("data-id")){
+      while(whereIam.getAttribute("data-id") != imdb){
         whereIam = whereIam.nextSibling;
       }
       movieDisplay.insertBefore(displayProfile(movieDataArray[i]), whereIam);
