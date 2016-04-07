@@ -11,55 +11,58 @@
     <div class="container-fluid">
       <div class="row">
         <div class="leftbank col-md-3 col-sm-6 col-xs-6">
-          <div class="input-group">
-            <input type="text" class="form-control" id="search-text" placeholder="Search for...">
+          <div class="input-group margin-top">
+            <input type="text" class="form-control fixed-border" id="search-text" placeholder="Search for a title...">
               <span class="input-group-btn">
-                <button class="btn btn-default" id="search-button" type="button">Search</button>
+                <button class="btn btn-default fixed-border" id="search-button" type="button">Search</button>
               </span>
             </div>
-            <div class="btn-group-vertical width" role="group">
-              <button type="button" class="btn btn-default" id="imdb-fifty">IMDB Top 100</button>
-              <button type="button" class="btn btn-default" id="rotten-fifty">Rotten Tomatoes Top 50</button>
-              <button type="button" class="btn btn-default" id="most-popular">Today's Most Popular Movies</button>
+            <hr>
+            <div class="btn-group-vertical width fixed-border" role="group">
+              <button type="button" class="btn btn-default fixed-border" id="imdb-fifty">IMDB Top 100</button>
+              <button type="button" class="btn btn-default fixed-border" id="rotten-fifty">Rotten Tomatoes Top 50</button>
+              <button type="button" class="btn btn-default fixed-border" id="most-popular">Today's Most Popular Movies</button>
               <div class="input-group">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" id="year-button" type="button">Popular Movies By Year:</button>
+                  <button class="btn btn-default fixed-border" id="year-button" type="button">Popular Movies By Year:</button>
                 </span>
                 <select id = "years" class="form-control">
 <!--years are generated here, it was just faster and cleaner to generate them than to write them all out-->
                 </select>
                 </div>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Sort your list by<span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" id="sort-list">
-                  <li><a id="sort-title">Title</a></li>
-                  <li><a id="sort-date">Date</a></li>
-                  <li><a id="sort-imdb">IMDB Rating</a></li>
-                  <li><a id="sort-rtr">Rotten Tomatoes Rating</a></li>
-                </ul>
+              </div>
+              <div id="search-results">
+<!-- search results are genereated here-->
               </div>
             </div>
-            <div class="input-group">
-              <input type="text" class="form-control" id="copy-text">
+            <div class="col-md-6 pull-right">
+              <div class="input-group pull-right" id="copy-box">
+                <input type="text" class="form-control" id="copy-text">
                 <span class="input-group-btn">
                   <button class="btn btn-default" id="copy-button" type="button">Share</button>
                 </span>
               </div>
-            <div id="search-results">
-<!-- search results are genereated here-->
             </div>
-          </div>
           <div class="pull-right col-md-9 col-sm-6 col-xs-6">
-              <div class="input-group">
-            <span class="input-group-btn">
-              <button class="hidden btn btn-default" id="title-button" type="button">Change</button>
-            </span>
-            <input type="text" class="hidden form-control" id="title-text" placeholder="Change Title">
-          </div>
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="hidden btn btn-default" id="title-button" type="button">Change</button>
+              </span>
+              <input type="text" class="hidden form-control" id="title-text" placeholder="Change Title">
+            </div>
             <h1 id="title">A Working Title</h1>
             <a id="change-title">Change title</a>
+            <div class="btn-group pull-right fixed-border" role="group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort your list by<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" id="sort-list">
+                <li><a id="sort-title">Title</a></li>
+                <li><a id="sort-date">Date</a></li>
+                <li><a id="sort-imdb">IMDB Rating</a></li>
+                <li><a id="sort-rtr">Rotten Tomatoes Rating</a></li>
+              </ul>
+            </div>
               <div class="container-fluid">
                 <div class="row"  id="movie-body">
 <!--movie list is inserted here-->

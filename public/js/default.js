@@ -88,12 +88,14 @@ function displayOneSearch(inputObject){
   if( inputObject.imdbRating && inputObject.imdbRating != "N/A"){
     var imdbP = document.createElement("p");
     var imdbText = document.createTextNode("IMDB Rating: " + inputObject.imdbRating + " / 10");
+    imdbP.setAttribute("class", "body-text");
     imdbP.appendChild(imdbText);
     innerDiv.appendChild(imdbP);
   }
   if( inputObject.Genre && inputObject.Genre != "N/A"){
     var genreP = document.createElement("p");
     var genreText = document.createTextNode(inputObject.Genre);
+    genreP.setAttribute("class", "body-text")
     genreP.appendChild(genreText);
     innerDiv.appendChild(genreP);
   }
