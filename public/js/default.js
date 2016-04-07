@@ -85,7 +85,7 @@ function displayOneSearch(inputObject){
   mediaHeading.setAttribute("class", "media-heading");
   mediaHeading.appendChild(headingText);
   innerDiv.appendChild(mediaHeading);
-  if( inputObject.imdbRating ){
+  if( inputObject.imdbRating && inputObject.imdbRating != "N/A"){
     var imdbP = document.createElement("p");
     var imdbText = document.createTextNode("IMDB Rating: " + inputObject.imdbRating + " / 10");
     imdbP.appendChild(imdbText);

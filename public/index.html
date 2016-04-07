@@ -10,7 +10,7 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="leftbank col-md-3">
+        <div class="leftbank col-md-3 col-sm-6 col-xs-6">
           <div class="input-group">
             <input type="text" class="form-control" id="search-text" placeholder="Search for...">
               <span class="input-group-btn">
@@ -23,7 +23,7 @@
               <button type="button" class="btn btn-default" id="most-popular">Today's Most Popular Movies</button>
               <div class="input-group">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" id="year-button" type="button">Most Popular Movies By Year:</button>
+                  <button class="btn btn-default" id="year-button" type="button">Popular Movies By Year:</button>
                 </span>
                 <select id = "years" class="form-control">
 <!--years are generated here, it was just faster and cleaner to generate them than to write them all out-->
@@ -51,11 +51,13 @@
 <!-- search results are genereated here-->
             </div>
           </div>
-          <div class="pull-right col-md-9">
+          <div class="pull-right col-md-9 col-sm-6 col-xs-6">
+              <div class="input-group">
+            <span class="input-group-btn">
+              <button class="hidden btn btn-default" id="title-button" type="button">Change</button>
+            </span>
             <input type="text" class="hidden form-control" id="title-text" placeholder="Change Title">
-              <span class="input-group-btn">
-                <button class="hidden btn btn-default" id="title-button" type="button">Change</button>
-              </span>
+          </div>
             <h1 id="title">A Working Title</h1>
             <a id="change-title">Change title</a>
               <div class="container-fluid">
