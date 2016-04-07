@@ -91,6 +91,12 @@ function displayOneSearch(inputObject){
     imdbP.appendChild(imdbText);
     innerDiv.appendChild(imdbP);
   }
+  if( inputObject.Genre && inputObject.Genre != "N/A"){
+    var genreP = document.createElement("p");
+    var genreText = document.createTextNode(inputObject.Genre);
+    genreP.appendChild(genreText);
+    innerDiv.appendChild(genreP);
+  }
   outterDiv.appendChild(mediaImage);
   container.appendChild(outterDiv);
   container.appendChild(innerDiv);
