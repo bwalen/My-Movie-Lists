@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var movieListArray = [];
 var popularMoviesIMDB = getPopular();
 var popularMoviesByYear = [];
-//timedPopular();
+timedPopular();
 var port = process.env.PORT || 1337;
 
 app.use(cookieParser());

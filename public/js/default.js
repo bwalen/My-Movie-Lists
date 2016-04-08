@@ -307,13 +307,15 @@ function getTrailer(inputObj){
 function trailerResponse(e){
   var res = e.target.response;
   res = JSON.parse(res);
-  var trailerDiv = document.getElementById("trailer");
-  var trailerIframe = document.createElement("iframe");
-  trailerIframe.setAttribute("width", "640");
-  trailerIframe.setAttribute("height", "360");
-  trailerIframe.setAttribute("src", res.trailers.web[0].embed);
-  trailerIframe.setAttribute("allowfullscreen" , "");
-  trailerDiv.appendChild(trailerIframe);
+  if(res.trailers.web.length > 0){
+    var trailerDiv = document.getElementById("trailer");
+    var trailerIframe = document.createElement("iframe");
+    trailerIframe.setAttribute("width", "640");
+    trailerIframe.setAttribute("height", "360");
+    trailerIframe.setAttribute("src", res.trailers.web[0].embed);
+    trailerIframe.setAttribute("allowfullscreen" , "");
+    trailerDiv.appendChild(trailerIframe);
+  }
   processPurchaseData(res);
 }
 
