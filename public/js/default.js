@@ -63,47 +63,48 @@ function displayMovies(array){
 }
 
 function displayOneSearch(inputObject){
-  var searchResults = document.getElementById("search-results");
-  var container = document.createElement("div");
-  var outterDiv = document.createElement("div");
-  var mediaImage = document.createElement("img");
-  var innerDiv = document.createElement("div");
-  var mediaHeading = document.createElement("h5");
-  var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
-  searchResults.setAttribute("class" , "more-margin");
-  container.setAttribute("class" , "media");
-  container.setAttribute("data-id", inputObject.imdbID);
-  outterDiv.setAttribute("class", "media-left");
-  if (inputObject.Poster == "N/A"){
-    mediaImage.setAttribute("src", "images/movie-1.png");
-  }
-  else{
-    mediaImage.setAttribute("src" , inputObject.Poster);
-  }
-  mediaImage.setAttribute("class" , "media-object");
-  innerDiv.setAttribute("class" , "media-body");
-  mediaHeading.setAttribute("class", "media-heading");
-  mediaHeading.appendChild(headingText);
-  innerDiv.appendChild(mediaHeading);
-  if( inputObject.imdbRating && inputObject.imdbRating != "N/A"){
-    var imdbP = document.createElement("p");
-    var imdbText = document.createTextNode("IMDB Rating: " + inputObject.imdbRating + " / 10");
-    imdbP.setAttribute("class", "body-text");
-    imdbP.appendChild(imdbText);
-    innerDiv.appendChild(imdbP);
-  }
-  if( inputObject.Genre && inputObject.Genre != "N/A"){
-    var genreP = document.createElement("p");
-    var genreText = document.createTextNode(inputObject.Genre);
-    genreP.setAttribute("class", "body-text")
-    genreP.appendChild(genreText);
-    innerDiv.appendChild(genreP);
-  }
-  outterDiv.appendChild(mediaImage);
-  container.appendChild(outterDiv);
-  container.appendChild(innerDiv);
-  searchResults.appendChild(container);
-  container.addEventListener("click", addMovieToList);
+  if (inputObject.Title){
+    var searchResults = document.getElementById("search-results");
+    var container = document.createElement("div");
+    var outterDiv = document.createElement("div");
+    var mediaImage = document.createElement("img");
+    var innerDiv = document.createElement("div");
+    var mediaHeading = document.createElement("h5");
+    var headingText = document.createTextNode(inputObject.Title + "  (" + inputObject.Year + ")");
+    searchResults.setAttribute("class" , "more-margin");
+    container.setAttribute("class" , "media");
+    container.setAttribute("data-id", inputObject.imdbID);
+    outterDiv.setAttribute("class", "media-left");
+    if (inputObject.Poster == "N/A"){
+      mediaImage.setAttribute("src", "images/movie-1.png");
+    }
+    else{
+      mediaImage.setAttribute("src" , inputObject.Poster);
+    }
+    mediaImage.setAttribute("class" , "media-object");
+    innerDiv.setAttribute("class" , "media-body");
+    mediaHeading.setAttribute("class", "media-heading");
+    mediaHeading.appendChild(headingText);
+    innerDiv.appendChild(mediaHeading);
+    if( inputObject.imdbRating && inputObject.imdbRating != "N/A"){
+      var imdbP = document.createElement("p");
+      var imdbText = document.createTextNode("IMDB Rating: " + inputObject.imdbRating + " / 10");
+      imdbP.setAttribute("class", "body-text");
+      imdbP.appendChild(imdbText);
+      innerDiv.appendChild(imdbP);
+    }
+    if( inputObject.Genre && inputObject.Genre != "N/A"){
+      var genreP = document.createElement("p");
+      var genreText = document.createTextNode(inputObject.Genre);
+      genreP.setAttribute("class", "body-text")
+      genreP.appendChild(genreText);
+      innerDiv.appendChild(genreP);
+    }
+    outterDiv.appendChild(mediaImage);
+    container.appendChild(outterDiv);
+    container.appendChild(innerDiv);
+    searchResults.appendChild(container);
+    container.addEventListener("click", addMovieToList);
 }
 
 function addMovieToList(e){
@@ -121,6 +122,7 @@ function addMovieToList(e){
     var copyBox = document.getElementById("copy-text");
     copyBox.value = "localhost:1337/session/" + JSON.stringify(moviesArray);
     getMovieData(imdbId);
+  }
   }
 }
 
@@ -307,6 +309,7 @@ function getTrailer(inputObj){
 function trailerResponse(e){
   var res = e.target.response;
   res = JSON.parse(res);
+  processPurchaseData(res);
   if(res.trailers.web.length > 0){
     var trailerDiv = document.getElementById("trailer");
     var trailerIframe = document.createElement("iframe");
@@ -316,7 +319,6 @@ function trailerResponse(e){
     trailerIframe.setAttribute("allowfullscreen" , "");
     trailerDiv.appendChild(trailerIframe);
   }
-  processPurchaseData(res);
 }
 
 function processPurchaseData(inputObj){
