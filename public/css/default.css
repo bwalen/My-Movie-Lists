@@ -39,6 +39,10 @@
   border-radius: 0px;
 }
 
+.h5{
+  color: #bf3636;
+}
+
 #years{
   position: relative;
   -webkit-appearance: none;
@@ -74,12 +78,9 @@ body{
 
 h4{
   color: #bf3636;
-  font-family: Georgia;
   font-weight: bold;
 }
 
 h5{
   color: #bf3636;
-  font-family: Georgia;
-  font-weight: bold;
 }

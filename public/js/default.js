@@ -158,6 +158,8 @@ function displayOneMovie(inputObj){
   var bodyText = document.createTextNode(inputObj.Plot);
   var starringText = document.createTextNode(inputObj.Actors);
   var closeSpan = document.createElement("span");
+  var detailsLink = document.createElement("a");
+  var detailsText = document.createTextNode("Click here for more information about " + inputObj.Title);
   container.setAttribute("class", "col-md-12 more-margin");
   if(inputObj.Poster== "N/A" ){
     movieImage.setAttribute("src", "images/movie-1.png");
@@ -166,18 +168,21 @@ function displayOneMovie(inputObj){
     movieImage.setAttribute("src", inputObj.Poster);
   }
   movieImage.setAttribute("class", "img-responsive");
+  detailsLink.setAttribute("class", "h5");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
   body.setAttribute("class", "body-text");
   closeSpan.setAttribute("class", "close glyphicon glyphicon-remove");
   container.setAttribute("data-id", inputObj.imdbID);
   closeSpan.setAttribute("data-id", inputObj.imdbID);
+  detailsLink.appendChild(detailsText);
   starring.appendChild(starringText);
   body.appendChild(bodyText);
   header.appendChild(headerText);
   caption.appendChild(header);
   caption.appendChild(starring);
   caption.appendChild(body);
+  caption.appendChild(detailsLink);
   container.appendChild(closeSpan);
   outterDiv.appendChild(movieImage);
   container.appendChild(outterDiv);
@@ -302,14 +307,14 @@ function getTrailer(inputObj){
 function trailerResponse(e){
   var res = e.target.response;
   res = JSON.parse(res);
-  if(res.length == 2){
-    var trailerDiv = document.getElementById("trailer");
-    trailerDiv.innerHTML = res[0].Assets[0].EmbedCodes[0].EmbedHTML;
-    processPurchaseData(res[1]);
-  }
-  else{
-    processPurchaseData(res[0]);
-  }
+  var trailerDiv = document.getElementById("trailer");
+  var trailerIframe = document.createElement("iframe");
+  trailerIframe.setAttribute("width", "640");
+  trailerIframe.setAttribute("height", "360");
+  trailerIframe.setAttribute("src", res.trailers.web[0].embed);
+  trailerIframe.setAttribute("allowfullscreen" , "");
+  trailerDiv.appendChild(trailerIframe);
+  processPurchaseData(res);
 }
 
 function processPurchaseData(inputObj){
