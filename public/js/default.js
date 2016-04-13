@@ -1,7 +1,7 @@
 function search(){
   var searchText = document.getElementById("search-text");
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://www.omdbapi.com/?s=" + searchText.value + "&type=movie&page=1&y=&plot=short&r=json&tomatoes=true" );
+  xhr.open("GET", "https://www.omdbapi.com/?s=" + searchText.value + "&type=movie&page=1&y=&plot=short&r=json&tomatoes=true" );
   xhr.send();
   xhr.addEventListener("load", function(){
     displaySearchResults(JSON.parse(xhr.response));
@@ -41,7 +41,7 @@ function displayMovieLists(inputArray){
 
 function getListData(imdbid){
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://www.omdbapi.com/?i=" + imdbid + "&plot=full&r=json&tomatoes=true");
+  xhr.open("GET", "https://www.omdbapi.com/?i=" + imdbid + "&plot=full&r=json&tomatoes=true");
   xhr.send();
   xhr.addEventListener("load", processListData);
 }
@@ -136,7 +136,7 @@ function removeAll(inputId){
 
 function getMovieData(movieId){
   xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://www.omdbapi.com/?i=" + movieId + "&plot=full&r=json&tomatoes=true");
+  xhr.open("GET", "https://www.omdbapi.com/?i=" + movieId + "&plot=full&r=json&tomatoes=true");
   xhr.send();
   xhr.addEventListener("load", addMovieData);
 }
