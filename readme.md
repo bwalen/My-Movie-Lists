@@ -7,16 +7,25 @@ For my second project, I decided to build a movie lists app where you are able t
 
 ##Technologies Used
 Html
+
 CSS
+
 Javascript
+
 NodeJs
+
   express module
+
   cookie parser module
+
   request module
+
 
 ##API's Utilized
 [Guidebox](https://api.guidebox.com/)
+
 [The MovieDB](https://www.themoviedb.org/documentation/api)
+
 [The Open Movie Database](http://omdbapi.com/)
 
 ##Screenshots
