@@ -26,4 +26,4 @@ request module
 
 ![Screenshot](https://cloud.githubusercontent.com/assets/17256090/14544065/1357e736-024c-11e6-9aa7-62b2d2cb63b7.png)
 ![Screenshot](https://cloud.githubusercontent.com/assets/17256090/14544100/51e3bc5a-024c-11e6-9574-879b7e728337.png)
-![Screenshot](https://raw.githubusercontent.com/bwalen/project-two/master/public/images/ss3.png)
+![Screenshot](https://cloud.githubusercontent.com/assets/17256090/14544310/43e3467e-024d-11e6-902a-0ea5b935d90f.png)
