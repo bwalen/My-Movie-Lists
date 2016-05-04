@@ -1,5 +1,12 @@
 .media-object{
   max-width: 64px;
+  border-width:1px;
+  border-style: solid;
+  border-color:black;
+}
+
+.hr{
+  color:black;
 }
 
 .media{
@@ -14,6 +21,12 @@
 
 .more-margin{
   margin: 5px;
+}
+
+.posters{
+  border-width:1px;
+  border-style: solid;
+  border-color:black;
 }
 
 .margin-top{
@@ -59,6 +72,9 @@
 }
 
 .leftbank{
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: black;
   height: 100vh;
   overflow: scroll;
   position: fixed;
@@ -73,7 +89,7 @@
 }
 
 body{
-  background-color: #ffffff;
+  background-color: #cccccc;
 }
 
 h4{

@@ -16,25 +16,20 @@
                 <button class="btn btn-default fixed-border" id="search-button" type="button">Search</button>
               </span>
             </div>
-            <hr>
-            <div class="btn-group-vertical width fixed-border" role="group">
-              <button type="button" class="btn btn-default fixed-border" id="imdb-fifty">IMDB Top 100</button>
-              <button type="button" class="btn btn-default fixed-border" id="rotten-fifty">Rotten Tomatoes Top 100</button>
-              <button type="button" class="btn btn-default fixed-border" id="most-popular">Today's Most Popular Movies</button>
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default fixed-border" id="year-button" type="button">Popular Movies By Year:</button>
-                </span>
-                <select id = "years" class="form-control">
+            <hr class="hr">
+              <a id="imdb-fifty">IMDB Top 100</a><br>
+              <a id="rotten-fifty">Rotten Tomatoes Top 100</a><br>
+              <a id="most-popular">Today's Most Popular Movies</a><br>
+              <a id="year-button" class="hidden">Popular Movies By Year:</a>
+              <select id = "years" class="hidden form-control">
 <!--years are generated here, it was just faster and cleaner to generate them than to write them all out-->
-                </select>
-                </div>
-              </div>
+              </select>
+              <hr class="hr">
               <div id="search-results">
 <!-- search results are genereated here-->
               </div>
             </div>
-            <div class="col-md-6 pull-right">
+           <div class="hidden col-md-6 pull-right">
               <div class="input-group pull-right" id="copy-box">
                 <input type="text" class="form-control" id="copy-text">
                 <span class="input-group-btn">

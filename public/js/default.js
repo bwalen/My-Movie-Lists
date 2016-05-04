@@ -169,7 +169,7 @@ function displayOneMovie(inputObj){
   else{
     movieImage.setAttribute("src", inputObj.Poster);
   }
-  movieImage.setAttribute("class", "img-responsive");
+  movieImage.setAttribute("class", "img-responsive posters");
   detailsLink.setAttribute("class", "h5");
   caption.setAttribute("class", "col-md-9");
   outterDiv.setAttribute("class", "col-md-3");
